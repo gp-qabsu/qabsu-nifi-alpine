@@ -24,12 +24,25 @@ docker run --name nifi \
 ```
 This will provision an instance of Apache Nifi with the NiFi toolkit, exposing the instance UI to the host system on port 8080, viewable at `http://localhost:8080/nifi`
 
-NiFi properties used during the provisioning of the container are as follows:
-
-| Property                                  | Environment Variable                   |
-|-------------------------------------------|----------------------------------------|
-| nifi.cluster.is.node                      | NIFI_WEB_HTTP_PORT                     |
-
-
-
 #### Secure Standalone Instance (TLS)
+In this configuration, the user will need to provide certificates and the associated configuration information.
+Of particular note, is the `AUTH` environment variable which is set to `tls`.  Additionally, the user must provide an
+the DN as provided by an accessing client certificate in the `INITIAL_ADMIN_IDENTITY` environment variable.
+This value will be used to seed the instance with an initial user with administrative privileges.
+Finally, this command makes use of a volume to provide certificates on the host system to the container instance.
+
+```shell
+docker run --name nifi \
+    -v /Users/qabsu/local.nifi/opt/certs:/opt/certs \
+    -p 8443:8443 \
+    -e AUTH=tls \
+    -e KEYSTORE_PATH=/opt/certs/keystore.jks \
+    -e KEYSTORE_TYPE=JKS \
+    -e KEYSTORE_PASSWORD=${keystore-password} \
+    -e TRUSTSTORE_PATH=/opt/certs/truststore.jks \
+    -e TRUSTSTORE_PASSWORD=${truststore-password} \
+    -e TRUSTSTORE_TYPE=JKS \
+    -e INITIAL_ADMIN_IDENTITY='CN=Qabsu, O=Apache, OU=NiFi, C=AU' \
+    -d \
+    qabsu/apache-nifi:1.12.1
+```
