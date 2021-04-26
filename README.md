@@ -1,4 +1,8 @@
 # Qabsu NiFi Image with Toolkit
+![GitHub repo size](https://img.shields.io/github/repo-size/gp-qabsu/qabsu-nifi-alpine)
+![GitHub contributors](https://img.shields.io/github/contributors/gp-qabsu/qabsu-nifi-alpine)
+![GitHub forks](https://img.shields.io/github/forks/gp-qabsu/qabsu-nifi-alpine?style=social)
+
 The following repository contains Apache NiFi and Toolkit provisioned on the Alpine Linux distribution.  The image supports running in standalone mode either unsecured or with user authentication provided via
 * Two-way SSL client certificates
 * Lightweight Directory Access Protocol (LDAP)
